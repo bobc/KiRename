@@ -32,24 +32,24 @@ Note: there must be only one project in source directory.
 
 1. Rename a project foo.pro to bar.pro
 
->  $ rename_project -n new_name
+> $ python rename_project.py -n new_name
 
 2. Rename a project foo.pro to foo_v1.pro
 
-> $ rename_project -t _v1
+> $ python rename_project.py -t _v1
 
 3. Rename a project foo.pro to /temp/bar.pro
 
-> $ rename_project -d /temp -n bar
+> $ python rename_project.py -d /temp -n bar
 
 4. Rename a project foo.pro to /temp/foo_v1.pro
 
-> $ rename_project -d /temp -t _v1
+> $ python rename_project.py -d /temp -t _v1
 
 5. Rename a project foo.pro to ./YYYY-MM-DD_HH-MM-SS/foo.pro
 
-> $ rename_project
+> $ python rename_project.py
 
 6. Rename a project foo.pro to ./save1/foo.pro
 
-> $ rename_project -d save1
+> $ python rename_project.py -d save1
