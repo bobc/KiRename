@@ -19,7 +19,6 @@ from time import strftime
 if sys.version_info[0] >= 3:
     raise Exception("Must be using Python 2")
 
-
 # handy methods from https://www.dotnetperls.com/between-before-after-python
 def before(value, a):
     # Find first part and return slice before it.
