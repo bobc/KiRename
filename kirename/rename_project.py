@@ -15,6 +15,11 @@ import os, sys, re, shutil, errno, getopt
 from datetime import datetime
 from time import strftime
 
+# Python VersionCheck
+if sys.version_info[0] >= 3:
+    raise Exception("Must be using Python 2")
+
+
 # handy methods from https://www.dotnetperls.com/between-before-after-python
 def before(value, a):
     # Find first part and return slice before it.
