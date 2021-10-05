@@ -13,7 +13,6 @@ Version 0.1 <br>
 
 
 ## Usage
-This Script don't run with python3. Use python.
 
 ```
 rename_project.py [-s <source>] [-d <dest>] [-n <name> | -t <tag> ]
