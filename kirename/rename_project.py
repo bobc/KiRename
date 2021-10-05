@@ -15,10 +15,6 @@ import os, sys, re, shutil, errno, getopt
 from datetime import datetime
 from time import strftime
 
-# Python VersionCheck
-if sys.version_info[0] >= 3:
-    raise Exception("Must be using Python 2")
-
 # handy methods from https://www.dotnetperls.com/between-before-after-python
 def before(value, a):
     # Find first part and return slice before it.
@@ -43,43 +39,43 @@ def make_sure_path_exists(path):
             raise
 
 def help(verbose):
-    print 'rename_project.py [-s <source>] [-d <dest>] [-n <name> | -t <tag> ]'
+    print ("rename_project.py [-s <source>] [-d <dest>] [-n <name> | -t <tag> ]")
     print
-    print "Version %s - GPLv3 - Copyright Bob Cousins 2017" % version
-    print '*** Beta test version: use with caution ***'
-    print
-    print 'rename a KiCad project'
-    print
-    print '-s               source directory (./)' 
-    print '-d               destination directory (./)' 
-    print '-n               new name' 
-    print '-t               tag to add' 
-    print '-x               dry run, do not change any files'
-    print '-h | --help      show quick help | more help' 
+    print ("Version %s - GPLv3 - Copyright Bob Cousins 2017" % version)
+    print ("*** Beta test version: use with caution ***")
+    print ()
+    print ("rename a KiCad project")
+    print ()
+    print ("-s               source directory (./)" )
+    print ("-d               destination directory (./)" )
+    print ("-n               new name")
+    print ("-t               tag to add")
+    print ("-x               dry run, do not change any files")
+    print ("-h | --help      show quick help | more help") 
 
     if verbose:
-        print
-        print 'Note: there must be only one project in source directory'
-        print ''
-        print 'Typical uses:'
-        print ''
-        print '1. Rename a project foo.pro to bar.pro' 
-        print '$ rename_project -n new_name' 
-        print ''
-        print '2. Rename a project foo.pro to foo_v1.pro' 
-        print '$ rename_project -t _v1' 
-        print ''
-        print '3. Rename a project foo.pro to /temp/bar.pro' 
-        print '$ rename_project -d /temp -n bar' 
-        print ''
-        print '4. Rename a project foo.pro to /temp/foo_v1.pro' 
-        print '$ rename_project -d /temp -t _v1' 
-        print ''
-        print '5. Rename a project foo.pro to ./YYYY-MM-DD_HH-MM-SS/foo.pro' 
-        print '$ rename_project' 
-        print ''
-        print '6. Rename a project foo.pro to ./save1/foo.pro' 
-        print '$ rename_project -d save1' 
+        print ()
+        print ('Note: there must be only one project in source directory')
+        print ('')
+        print ('Typical uses:')
+        print ('')
+        print ('1. Rename a project foo.pro to bar.pro' )
+        print ('$ rename_project -n new_name' )
+        print ('')
+        print ('2. Rename a project foo.pro to foo_v1.pro' )
+        print ('$ rename_project -t _v1' )
+        print ('')
+        print ('3. Rename a project foo.pro to /temp/bar.pro' )
+        print ('$ rename_project -d /temp -n bar' )
+        print ('')
+        print ('4. Rename a project foo.pro to /temp/foo_v1.pro' )
+        print ('$ rename_project -d /temp -t _v1' )
+        print ('')
+        print ('5. Rename a project foo.pro to ./YYYY-MM-DD_HH-MM-SS/foo.pro' )
+        print ('$ rename_project' )
+        print ('')
+        print ('6. Rename a project foo.pro to ./save1/foo.pro' )
+        print ('$ rename_project -d save1') 
 
 #  destdir[_tag] / name[_tag]
 
@@ -143,7 +139,7 @@ def main(argv):
         sourcedir = os.getcwd()
 
     if not os.path.exists (sourcedir):
-        print "error: %s is not a directory" % sourcedir
+        print ("error: %s is not a directory" % sourcedir)
         quit()
 
     #
@@ -168,11 +164,11 @@ def main(argv):
             if project == "":
                 project = before (file, ".pro")
             else:
-                print "error: multiple projects found in %s" % sourcedir
+                print ("error: multiple projects found in %s" % sourcedir)
                 quit(1)
 
     if project == "":
-        print "error: no project file found in %s" % sourcedir    
+        print ("error: no project file found in %s" % sourcedir)    
         quit(2)
 
     if destdir== "":
@@ -181,7 +177,7 @@ def main(argv):
             destdir = os.path.join (sourcedir, strftime("%Y-%m-%d_%H-%M-%S"))
             new_name = project
         elif (suffix!="" and new_name!=""):
-            print "error: must specify only one of name or tag"
+            print ("error: must specify only one of name or tag")
             quit()
         elif suffix != "":
             mode = "rename"
@@ -197,7 +193,7 @@ def main(argv):
             destdir = os.path.join(sourcedir, destdir)
             new_name = project
         elif (suffix!="" and new_name!=""):
-            print "error: must specify only one of name or tag"
+            print ("error: must specify only one of name or tag")
             quit()
         elif suffix != "":
             mode = "copy"
@@ -211,24 +207,24 @@ def main(argv):
 
 
     ## 
-    print "project name: %s" % project
-    print "new project name: %s" % new_name
-    print ""
+    print ("project name: %s" % project)
+    print ("new project name: %s" % new_name)
+    print ("")
 
     if dry_run:
-        print "mode      : %s" % mode
-        print "sourcedir : %s" % sourcedir
-        print "destdir   : %s" % destdir
-        print ""
+        print ("mode      : %s" % mode)
+        print ("sourcedir : %s" % sourcedir)
+        print ("destdir   : %s" % destdir)
+        print ("")
 
     if dry_run:
         if not os.path.exists(destdir):
-            print "create : %s" % destdir
+            print ("create : %s" % destdir)
     else:
         try:
             make_sure_path_exists (destdir)
         except:
-            print "error creating dest folder %s" % destdir
+            print ("error creating dest folder %s" % destdir)
             quit()
 
     try:
@@ -257,7 +253,7 @@ def main(argv):
                     dest_file = os.path.join (destdir, new_name + after (file, project))
         
                     if dry_run:
-                        print "rename : %s ==> %s" % (file, dest_file)
+                        print ("rename : %s ==> %s" % (file, dest_file))
                     else:
                         if mode == "copy":
                             shutil.copy2 (source_file, dest_file)
@@ -269,12 +265,12 @@ def main(argv):
                         source_file = os.path.join(sourcedir, file)
                         dest_file = os.path.join (destdir, file)
                         if dry_run:
-                            print "copy   : %s ==> %s" % (file, dest_file)
+                            print ("copy   : %s ==> %s" % (file, dest_file))
                         else:
                             shutil.copy2 (source_file, dest_file)
 
     except IOError as exception:
-        print "error copying file %s : %s" % (exception.filename, exception.strerror)
+        print ("error copying file %s : %s" % (exception.filename, exception.strerror))
         quit()
 
 
